@@ -19,7 +19,7 @@ class ChatView(APIView):
             output = query({
                 "inputs": user_input,
             })
-
+            print(output)
             # Do something with the 'output' variable or return a response
             return Response({'answer': output[0]["generated_text"]})
         else:

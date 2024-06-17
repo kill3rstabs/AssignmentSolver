@@ -2,7 +2,7 @@ from PIL import Image
 import base64
 from datetime import datetime
 
-def writee(BG, char, gap, _):
+def write_char(BG, char, gap, _):
     if char == '\n':
         pass
     else:
@@ -14,7 +14,7 @@ def writee(BG, char, gap, _):
         del cases
     return gap, _
 
-def letterwrite(BG, allowed_chars, gap, _, word):
+def write_word(BG, allowed_chars, gap, _, word):
     if gap > BG.width - 95 * (len(word)):
         gap = 0
         _ += 200
@@ -39,24 +39,24 @@ def letterwrite(BG, allowed_chars, gap, _, word):
                 letter = 'braketcl'
             elif letter == '-':
                 letter = 'hyphen'
-            gap, _ = writee(BG, letter, gap, _)
+            gap, _ = write_char(BG, letter, gap, _)
     return gap, _
 
-def worddd(BG, allowed_chars, gap, _, input_text):
+def write_text(BG, allowed_chars, gap, _, input_text):
     wordlist = input_text.split(' ')
     for i in wordlist:
-        gap, _ = letterwrite(BG, allowed_chars, gap, _, i)
-        gap, _ = writee(BG, 'space', gap, _)
+        gap, _ = write_word(BG, allowed_chars, gap, _, i)
+        gap, _ = write_char(BG, 'space', gap, _)
     return gap, _
 
 def pdf_creation(png_file, flag=False):
     rgba = Image.open(png_file)
     rgb = Image.new('RGB', rgba.size, (255, 255, 255))  # white background
     rgb.paste(rgba, mask=rgba.split()[3])  # paste using alpha channel as mask
-    file_name = 'final_output' + str(datetime.now()) +'.pdf'
+    file_name = 'final_output_' + datetime.now().strftime("%Y%m%d_%H%M%S") + '.pdf'
     rgb.save(file_name, append=flag)  # Now save multiple images in the same pdf file
+    print("PDF file created successfully:", file_name)
     return file_name
-
 
 def convert_handwriting(text):
     gap, _ = 0, 0
@@ -70,8 +70,8 @@ def convert_handwriting(text):
         p = [text[i:i + chunk_size] for i in range(0, chunks, chunk_size)]
 
         for i in range(0, len(p)):
-            gap, _ = worddd(BG, 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM,.-?!() 1234567890', gap, _, p[i])
-            gap, _ = writee(BG, '\n', gap, _)
+            gap, _ = write_text(BG, 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM,.-?!() 1234567890', gap, _, p[i])
+            gap, _ = write_char(BG, '\n', gap, _)
             BG.save('%doutt.png' % i)
             BG1 = Image.open("static/myfont/bg.png")
             BG = BG1
@@ -86,11 +86,10 @@ def convert_handwriting(text):
     # Source: https://datatofish.com/images-to-pdf-python/
 
     # First create a pdf file if not created
-    pdf_creation(imagelist.pop(0))
+    file_name = pdf_creation(imagelist.pop(0))
 
     # Now I am opening each image and converting them to pdf
     # Appending them to pdfs
-    file_name = ''
     for png_file in imagelist:
         file_name = pdf_creation(png_file, flag=True)
     return file_name
