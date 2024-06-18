@@ -81,7 +81,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost",       # Assuming your React app may run on different ports
     "http://127.0.0.1",
     "http://localhost:8000",  # If your Django development server runs on a different port
-    "http://127.0.0.1:8000",  # Add your frontend URL here
+    "http://127.0.0.1:8000",
+    "https://0bec-111-88-103-18.ngrok-free.app"  # Add your frontend URL here
     # Add more allowed origins as needed
 ]
 

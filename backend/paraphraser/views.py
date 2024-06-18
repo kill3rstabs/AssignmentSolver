@@ -14,7 +14,7 @@ class ParaphraseView(APIView):
             if not input_text:
                 return Response({'error': 'Missing input_text in the request body'}, status=status.HTTP_400_BAD_REQUEST)
 
-            API_URL = "https://api-inference.huggingface.co/models/humarin/chatgpt_paraphraser_on_T5_base"
+            API_URL = "https://api-inference.huggingface.co/models/prithivida/parrot_paraphraser_on_T5"
             headers = {"Authorization": f"Bearer {config('HUGGING_FACE_API_KEY')}"}
 
             def query(payload):
@@ -24,6 +24,7 @@ class ParaphraseView(APIView):
             output = query({
                 "inputs": input_text,
             })
+            print(output)
         
             if output:
                 return Response({'paraphrased_text': output[0]['generated_text']}, status=status.HTTP_200_OK)

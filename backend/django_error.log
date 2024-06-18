@@ -1,58 +1,8 @@
-  ERROR 2024-06-17 15:37:20,176 log Internal Server Error: /api/gpt
-Traceback (most recent call last):
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
-    return view_func(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\django\views\generic\base.py", line 104, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\gpt\views.py", line 24, in post
-    return Response({'answer': output[0]["generated_text"]})
-                               ~~~~~~^^^
-KeyError: 0
-ERROR 2024-06-17 15:37:20,206 basehttp "POST /api/gpt HTTP/1.1" 500 102448
-ERROR 2024-06-17 15:37:27,111 log Internal Server Error: /api/gpt
-Traceback (most recent call last):
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
-    response = get_response(request)
-               ^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\django\views\decorators\csrf.py", line 65, in _view_wrapper
-    return view_func(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\django\views\generic\base.py", line 104, in view
-    return self.dispatch(request, *args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\myenv\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "C:\Users\Nashit Budhwani\Downloads\AssignmentSolver-main\AssignmentSolver-main\backend\gpt\views.py", line 24, in post
-    return Response({'answer': output[0]["generated_text"]})
-                               ~~~~~~^^^
-KeyError: 0
-ERROR 2024-06-17 15:37:27,128 basehttp "POST /api/gpt HTTP/1.1" 500 102448
+ERROR 2024-06-17 21:39:43,313 log Internal Server Error: /api/paraphrase
+ERROR 2024-06-17 21:39:43,315 basehttp "POST /api/paraphrase HTTP/1.1" 500 43
+ERROR 2024-06-17 21:39:50,490 log Internal Server Error: /api/paraphrase
+ERROR 2024-06-17 21:39:50,494 basehttp "POST /api/paraphrase HTTP/1.1" 500 43
+ERROR 2024-06-17 22:00:21,019 log Internal Server Error: /api/paraphrase
+ERROR 2024-06-17 22:00:21,022 basehttp "POST /api/paraphrase HTTP/1.1" 500 43
+ERROR 2024-06-18 11:41:10,655 log Internal Server Error: /api/paraphrase
+ERROR 2024-06-18 11:41:10,655 basehttp "POST /api/paraphrase HTTP/1.1" 500 43
