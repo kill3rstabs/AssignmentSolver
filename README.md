@@ -16,19 +16,18 @@ Frontend was developed with the assistance of Ali Hassan.
 ### Step 1: Clone the Repository
 
 ```bash
-git clone
+git clone https://github.com/kill3rstabs/AssignmentSolver.git
 ```
 
 ### Step 2: Setting Up the Frontend
   
-  1. Navigate to the frontend directory:
-     
+1. Navigate to the frontend directory:
     ```bash
-    cd frontend
+     cd frontend
     ```
   2. Install the necessary dependencies:
      ```bash
-     nom install
+     npm install
      ```
   3. Create a new .env file
   4. Copy .env.example content in .env
