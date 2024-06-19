@@ -7,6 +7,7 @@ import {
   TextField,
   Paper,
   Container,
+  CircularProgress,
 } from "@mui/material";
 
 function Chat({ answer }) {
@@ -17,11 +18,16 @@ function Chat({ answer }) {
   const [isAnswerEnabled, setIsAnswerEnabled] = useState(false);
   const [isParaphraserEnabled, setIsParaphraserEnabled] = useState(false);
   
+  const [isChatLoading, setIsChatLoading] = useState(false);
+  const [isParaphraseLoading, setIsParaphraseLoading] = useState(false);
+  const [isHandwrittenLoading, setIsHandwrittenLoading] = useState(false);
 
   const chatApi = process.env.REACT_APP_API + "/gpt";
   const pharaphraseApi = process.env.REACT_APP_API + "/paraphrase";
   const handwrittenApi = process.env.REACT_APP_API + "/handwriting";
+
   const handleChatClick = async () => {
+    setIsChatLoading(true);
     try {
       const uploadResponse = await axios.post(
         chatApi,
@@ -42,10 +48,13 @@ function Chat({ answer }) {
     } catch (error) {
       alert("Response timed out please try again!");
       console.error("Failed to send message!", error);
+    } finally {
+      setIsChatLoading(false);
     }
   };
 
   const handlePharaphaseClick = async () => {
+    setIsParaphraseLoading(true);
     try {
       const uploadResponse = await axios.post(
         pharaphraseApi,
@@ -65,28 +74,41 @@ function Chat({ answer }) {
     } catch (error) {
       alert("Response timed out please try again!");
       console.error("Failed to send message!", error);
+    } finally {
+      setIsParaphraseLoading(false);
     }
   };
 
-  const handlehandwrittenClick = async () => {
+  const downloadPdf = (base64Data) => {
+    const linkSource = `data:application/pdf;base64,${base64Data}`;
+    const downloadLink = document.createElement('a');
+    const fileName = 'YourAssignment.pdf';
+  
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    downloadLink.click();
+  };
+  
+  const handleHandwrittenClick = async () => {
+    setIsHandwrittenLoading(true);
     try {
       const uploadResponse = await axios.post(
         handwrittenApi,
-        {
-          text: paraphrasedAnswer,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
+        { text: paraphrasedAnswer },
+        { headers: { "Content-Type": "application/json" } }
       );
-      console.log("Message sent successfully:", uploadResponse.data);
-      setHandwrittenAnswer(uploadResponse.data.handwritten_text);
-      return uploadResponse.data;
+  
+      if (uploadResponse.data.pdf) {
+        console.log("PDF downloaded successfully:", uploadResponse.data.pdf);
+        downloadPdf(uploadResponse.data.pdf);
+      } else {
+        console.error('Error downloading PDF');
+      }
     } catch (error) {
       alert("Response timed out please try again!");
       console.error("Failed to send message!", error);
+    } finally {
+      setIsHandwrittenLoading(false);
     }
   };
 
@@ -125,8 +147,9 @@ function Chat({ answer }) {
             variant="contained"
             color="tertiary"
             onClick={handleChatClick}
+            disabled={isChatLoading}
           >
-            Chat
+            {isChatLoading ? <CircularProgress size={24} color="inherit" /> : "Chat"}
           </Button>
         </Box>
         <Box
@@ -153,8 +176,9 @@ function Chat({ answer }) {
             variant="contained"
             color="tertiary"
             onClick={handlePharaphaseClick}
+            disabled={isParaphraseLoading}
           >
-            Paraphrase
+            {isParaphraseLoading ? <CircularProgress size={24} color="inherit" /> : "Paraphrase"}
           </Button>
         </Box>
         <Box
@@ -174,15 +198,17 @@ function Chat({ answer }) {
               multiline
               rows={4}
               value={paraphrasedAnswer}
+              onChange={(e) => setParaphrasedAnswer(e.target.value)}
             />     
         </Paper>
         <Button
             sx={{width:"365px"}}
             variant="contained"
             color="tertiary"
-            onClick={handlehandwrittenClick}
+            onClick={handleHandwrittenClick}
+            disabled={isHandwrittenLoading}
           >
-            Download Handwritten
+            {isHandwrittenLoading ? <CircularProgress size={24} color="inherit" /> : "Download Handwritten"}
           </Button>
 
         </Box>

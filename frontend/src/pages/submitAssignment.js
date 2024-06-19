@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Typography, Box, Button, Container, Paper } from "@mui/material";
+import { Typography, Box, Button, Container, Paper, CircularProgress } from "@mui/material";
 import {
   faCloudArrowDown,
   faFolderOpen,
@@ -28,7 +28,7 @@ const serviceList = [
     title: "STEP 3: Get Paraphrased and Handwritten",
     icon: faPenToSquare,
     description:
-      "Get your answers paraphrased for eleminating palagarism and get a handwritten copy.",
+      "Get your answers paraphrased for eliminating plagiarism and get a handwritten copy.",
   },
 ];
 
@@ -36,14 +36,27 @@ function CreatePost() {
   const [content, setContent] = useState("");
   const [file, setFile] = useState(null);
   const [isChatEnabled, setIsChatEnabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const ocrApi = process.env.REACT_APP_API + "/ocr";
   console.log("ocrApi", ocrApi);
+
+  const handleFileSelect = (selectedFile) => {
+    const allowedTypes = ["application/pdf", "image/jpeg", "image/png"];
+    if (allowedTypes.includes(selectedFile.type)) {
+      setFile(selectedFile);
+    } else {
+      alert("Please upload a valid PDF or image file.");
+    }
+  };
+
   const handlePostClick = async () => {
     try {
       if (!file) {
         console.log("No file selected");
         return;
       }
+
+      setIsLoading(true); // Start loader
 
       const formData = new FormData();
       formData.append("file", file);
@@ -53,12 +66,15 @@ function CreatePost() {
           "Content-Type": "multipart/form-data",
         },
       });
+
       setContent(uploadResponse.data);
       console.log("Files uploaded successfully:", uploadResponse.data);
       setIsChatEnabled(true);
       return uploadResponse.data;
     } catch (error) {
       console.error("Failed to upload file!", error);
+    } finally {
+      setIsLoading(false); // Stop loader
     }
   };
 
@@ -80,13 +96,14 @@ function CreatePost() {
           sx={{
             pt: 4,
             display: "flex",
-            flexDirction: "row",
+            flexDirection: "row",
             justifyContent: "space-between",
             gap: 4,
           }}
         >
-          {serviceList.map((service) => (
+          {serviceList.map((service, index) => (
             <Paper
+              key={index}
               elevation={3}
               sx={{ height: "230px", width: "400px", bgcolor: "#8860D0" }}
             >
@@ -100,14 +117,16 @@ function CreatePost() {
                     style={{ fontSize: "60px", color: "#C1C8E4" }}
                   />
                 </Box>
-                <Typography color="primary" sx={{fontWeight:400}}>{service.description}</Typography>
+                <Typography color="primary" sx={{ fontWeight: 400 }}>
+                  {service.description}
+                </Typography>
               </Box>
             </Paper>
           ))}
         </Box>
         <Box
           sx={{
-            ml:0,
+            ml: 0,
             mt: 6,
             display: "flex",
             justifyContent: "space-between",
@@ -116,18 +135,23 @@ function CreatePost() {
           {isChatEnabled ? (
             <Chat answer={content} />
           ) : (
-            <UploadButton icon={faCloudArrowDown} onFileSelect={setFile} />
+            <UploadButton icon={faCloudArrowDown} onFileSelect={handleFileSelect} />
           )}
           {!isChatEnabled && (
             <Button
               variant="contained"
               color="tertiary"
               onClick={handlePostClick}
-              sx={{color:"#fff", width:"360px", "&:hover":{  
-                bgcolor:"#8860D0"
-              }}}
+              sx={{
+                color: "#fff",
+                width: "360px",
+                "&:hover": {
+                  bgcolor: "#8860D0",
+                },
+              }}
+              disabled={isLoading} // Disable button when loading
             >
-              Submit
+              {isLoading ? <CircularProgress size={24} color="inherit" /> : "Submit"}
             </Button>
           )}
         </Box>
