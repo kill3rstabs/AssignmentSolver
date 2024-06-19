@@ -19,7 +19,7 @@ Frontend was developed with the assistance of Ali Hassan.
 git clone
 ```
 
-###Step 2: Setting Up the Frontend
+### Step 2: Setting Up the Frontend
   
   1. Navigate to the frontend directory:
      
@@ -30,6 +30,46 @@ git clone
      ```bash
      nom install
      ```
-  3. 
+  3. Create a new .env file
+  4. Copy .env.example content in .env
+  5. Replace backend URL with your local backend url
+  6. Start the frontend server:
+     ```bash
+     npm start
+     ```
+### Step 3: Setting Up the Backend:
+  1. Navigate to the backend directory:
+     ```bash
+     cd Backend
+     ```
+ 2. Create a Virtual Environment:
+    ```bash
+    python -m venv venv
+    ```
+ 3. Activate the Virtual Environment:
+    #### On Windows:
+      ```bash
+      .\venv\Scripts\activate
+      ```
+    #### On MacOS/Linux:
+      ```bash
+      source venv/bin/activate
+      ```
+ 4. Install the required Python packages:
+    ```bash
+    pip install -r requirements.txt
+    ```
+ 5. Create a new .env file
+ 6. Copy .env.example content in .env
+ 7. Replace the huggingface token with your token:
+    https://huggingface.co/docs/hub/en/security-tokens
+ 8. Start the backend server:
+    ```bash
+    python manage.py runserver
+    ```
+    
+      
+    
+     
      
      
