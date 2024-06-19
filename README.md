@@ -9,7 +9,7 @@ Assignment Solver is an innovative project designed for hackathons. It offers th
 3. Paraphrases the output to prevent AI plagiarism.
 4. Outputs a human-written PDF.
 
-Frontend was developed with the assistance of Ali Hassan.
+Frontend was developed with the assistance of [Ali Hassan](https://github.com/AliHM15).
 
 ## Setup Instructions
 
@@ -66,6 +66,17 @@ git clone https://github.com/kill3rstabs/AssignmentSolver.git
     ```bash
     python manage.py runserver
     ```
+
+# Demo Images:
+### Upload your document:
+![Upload the document](https://i.ibb.co/gSTwMjQ/1.png)
+
+### Edit the converted text as per your needs and generate the Assignment:
+![Upload the document](https://i.ibb.co/TgKfFTV/2.png)
+
+### Generated Assignment PDF:
+![Upload the document](https://i.ibb.co/HB1bQNB/3.png)
+
     
       
     
