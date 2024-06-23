@@ -38,7 +38,7 @@ def write_word(BG, allowed_chars, gap, _, word):
             elif letter == ')':
                 letter = 'braketcl'
             elif letter == '-':
-                letter = 'hyphen'
+                letter = 'hiphen'
             gap, _ = write_char(BG, letter, gap, _)
     return gap, _
 
