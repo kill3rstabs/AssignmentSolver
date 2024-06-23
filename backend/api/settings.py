@@ -1,8 +1,8 @@
 from pathlib import Path
-from decouple import config, Csv
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -38,25 +38,9 @@ LOGGING = {
     },
 }
 
-
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-h+7pfwg9ef*&)(8u&ilys8kbe&tdwpvu7ucpl@jynzb=z-vqvt'
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-# backend_url = config('BACKEND_URL')
 ALLOWED_HOSTS = ['*']
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'drf_yasg',
@@ -64,6 +48,7 @@ INSTALLED_APPS = [
     'handwriting',
     'ocr',
     'gpt',
+    'frontend',
     'paraphraser',
     'rest_framework',
     'django.contrib.admin',
@@ -74,16 +59,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Adjust this to your React app's URL
-    "http://127.0.0.1:3000",  # Another common localhost address
-    "http://localhost",       # Assuming your React app may run on different ports
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost",
     "http://127.0.0.1",
-    "http://localhost:8000",  # If your Django development server runs on a different port
+    "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "https://0bec-111-88-103-18.ngrok-free.app"  # Add your frontend URL here
-    # Add more allowed origins as needed
+    "https://0bec-111-88-103-18.ngrok-free.app"
 ]
 
 MIDDLEWARE = [
@@ -103,7 +86,7 @@ ROOT_URLCONF = 'api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, '../frontend/build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,7 +99,6 @@ TEMPLATES = [
     },
 ]
 
-
 # Swagger settings
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
@@ -128,20 +110,12 @@ SWAGGER_SETTINGS = {
 
 WSGI_APPLICATION = 'api.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -158,25 +132,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STATIC_URL = 'static/'
-DEBUG = True
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, '../frontend', 'build', 'static'),
+]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
